@@ -1,0 +1,115 @@
+﻿<Window x:Class="HotkeyMusicPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotkeyMusicPlayer"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Hotkey Music" Height="650" Width="625"
+        AllowDrop="True" Drop="Window_Drop"
+        Loaded="Window_Loaded"
+        KeyDown="Window_KeyDown"
+        Closing="Window_Closing">
+
+    <Window.Resources>
+        <local:PathToUriConverter x:Key="pathToUriCon"/>
+        <local:IsCheckedToMediaState x:Key="isPlayingCon"/>
+
+        <local:MaxValueProperties x:Key="widthConProps" MinTargetValue="150" TargetValueOfSource="200"/>
+        <local:MaxWidthConverter x:Key="maxWidthCon"/>
+    </Window.Resources>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="tbxSearch" HorizontalAlignment="Stretch" TextChanged="TblSearch_TextChanged"
+                     Text="{Binding SearchKey,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     KeyDown="TbxSearch_KeyDown"/>
+
+            <CheckBox Grid.Column="1" Margin="5,0,0,0" Content="PlayOnlySearch" VerticalAlignment="Center"
+                      IsChecked="{Binding PlayOnlySearchSongs,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <CheckBox Grid.Column="2" Margin="5,0,0,0" Content="Shuffle" VerticalAlignment="Center"
+                      IsChecked="{Binding IsShuffle,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Grid.Column="3" Margin="5,0,0,0" Content="Refresh" Width="100" Click="Refresh_Click"/>
+        </Grid>
+
+        <ListBox Grid.Row="1" x:Name="lbxSongs" Margin="0,5" HorizontalAlignment="Stretch"
+                 ItemsSource="{Binding Songs}" SelectedItem="{Binding CurrentShowSong}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.RowSpan="2" TextAlignment="Center" VerticalAlignment="Center"
+                                   Text="{Binding Index}" Margin="5,0"/>
+
+                        <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Title}"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Artist}" FontStyle="Italic"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Previous" Width="75" Click="Previous_Click"/>
+            <ToggleButton Grid.Column="1" Content="Play/Pause" Margin="5,0" Width="75"
+                          IsChecked="{Binding ElementName=media,Path=LoadedBehavior,Mode=TwoWay,
+                            Converter={StaticResource ResourceKey=isPlayingCon}}" 
+                          Checked="Play_Click" Unchecked="Pause_Click"/>
+            <Button Grid.Column="2" Content="Next" Width="75" Click="Next_Click"/>
+
+            <StackPanel Grid.Column="3" DataContext="{Binding CurrentPlaySong}" Margin="10,0"
+                        MaxWidth="{Binding ElementName=sldPosition,Path=ActualWidth,
+                          Converter={StaticResource maxWidthCon},
+                          ConverterParameter={StaticResource widthConProps}}">
+                <TextBlock Text="{Binding Title}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" FontStyle="Italic"/>
+            </StackPanel>
+
+            <TextBlock Grid.Column="4" Margin="5,0" VerticalAlignment="Center"
+                       Text="{Binding CurrentPlaySongPositionText}"/>
+            <Slider Grid.Column="5" x:Name="sldPosition" Minimum="0" Maximum="1" IsMoveToPointEnabled="True"
+                    VerticalAlignment="Center" Value="{Binding CurrentPlaySongPosition,Mode=TwoWay}"/>
+            <TextBlock Grid.Column="6" x:Name="tblDuration" Margin="5,0" VerticalAlignment="Center"
+                       Text="{Binding CurrentPlaySongDurationText}"
+                       MouseLeftButtonUp="StackPanel_MouseRightButtonUp"/>
+        </Grid>
+
+        <MediaElement Grid.Row="3" x:Name="media" LoadedBehavior="Pause"
+                      Source="{Binding CurrentPlaySong,Converter={StaticResource pathToUriCon}}" 
+                      MediaEnded="Media_MediaEnded"/>
+    </Grid>
+</Window>

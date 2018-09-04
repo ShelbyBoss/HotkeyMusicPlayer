@@ -1,0 +1,3 @@
+Previous=Q,Win,Alt
+PlayPause=W,Win,Alt
+Next=E,Win,Alt
