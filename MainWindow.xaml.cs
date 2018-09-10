@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StdOttWpfLib.Hotkey;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -37,7 +38,7 @@ namespace HotkeyMusicPlayer
                 string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, hotKeyFileName);
                 string[] hotKeyLines = File.ReadAllLines(path);
 
-                hotKeys = HotKeys.GetRegisteredHotKeys(hotKeyLines, GetHotKeySources()).ToArray();
+                hotKeys = HotKey.GetRegisteredHotKeys(hotKeyLines, GetHotKeySources()).ToArray();
             }
             catch (Exception exc)
             {

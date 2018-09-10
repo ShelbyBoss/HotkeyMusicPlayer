@@ -58,11 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="HotKey\HotKey.cs" />
-    <Compile Include="HotKey\HotKeys.cs" />
-    <Compile Include="HotKey\HotKeySource.cs" />
     <Compile Include="IsCheckedToMediaState.cs" />
-    <Compile Include="HotKey\KeyPressedEventArgs.cs" />
     <Compile Include="MaxValueProperties.cs" />
     <Compile Include="MaxWidthConverter.cs" />
     <Compile Include="PathToUriConverter.cs" />
@@ -110,6 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="7.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StdOttLib\StdOttWpfLib.csproj">
+      <Project>{d1334524-78a5-4d16-93bf-27a57c6dbe56}</Project>
+      <Name>StdOttWpfLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
