@@ -15,9 +15,6 @@
     <Window.Resources>
         <local:PathToUriConverter x:Key="pathToUriCon"/>
         <local:IsCheckedToMediaState x:Key="isPlayingCon"/>
-
-        <local:MaxValueProperties x:Key="widthConProps" MinTargetValue="150" TargetValueOfSource="200"/>
-        <local:MaxWidthConverter x:Key="maxWidthCon"/>
     </Window.Resources>
 
     <Grid Margin="5">
@@ -73,14 +70,14 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" SizeChanged="Grid_SizeChanged">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" Name="cdSong"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" Name="cdSlider"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
@@ -91,12 +88,9 @@
                           Checked="Play_Click" Unchecked="Pause_Click"/>
             <Button Grid.Column="2" Content="Next" Width="75" Click="Next_Click"/>
 
-            <StackPanel Grid.Column="3" DataContext="{Binding CurrentPlaySong}" Margin="10,0"
-                        MaxWidth="{Binding ElementName=sldPosition,Path=ActualWidth,
-                          Converter={StaticResource maxWidthCon},
-                          ConverterParameter={StaticResource widthConProps}}">
-                <TextBlock Text="{Binding Title}" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" FontStyle="Italic"/>
+            <StackPanel Grid.Column="3" DataContext="{Binding CurrentPlaySong}">
+                <TextBlock Name="tblTitle" Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0"/>
+                <TextBlock Name="tblArtist" Text="{Binding Artist}" TextWrapping="Wrap" FontStyle="Italic" Margin="10,0,0,0"/>
             </StackPanel>
 
             <TextBlock Grid.Column="4" Margin="5,0" VerticalAlignment="Center"
@@ -110,6 +104,6 @@
 
         <MediaElement Grid.Row="3" x:Name="media" LoadedBehavior="Pause"
                       Source="{Binding CurrentPlaySong,Converter={StaticResource pathToUriCon}}" 
-                      MediaEnded="Media_MediaEnded"/>
+                      MediaOpened="Media_MediaOpened" MediaEnded="Media_MediaEnded"/>
     </Grid>
 </Window>

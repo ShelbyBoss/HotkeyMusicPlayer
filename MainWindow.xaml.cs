@@ -13,12 +13,13 @@ namespace HotkeyMusicPlayer
 {
     public partial class MainWindow : Window
     {
-        private string hotKeyFileName = "hotkeys.txt",
+        private const string hotKeyFileName = "hotkeys.txt",
             previousKey = "Previous=", playPauseKey = "PlayPause=", nextKey = "Next=";
 
         private HotKey[] hotKeys;
         private DispatcherTimer timer;
         private ViewModel viewModel;
+        private WidthService widthService;
 
         public MainWindow()
         {
@@ -29,6 +30,14 @@ namespace HotkeyMusicPlayer
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Tick += Timer_Tick;
+        }
+
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CurrentPlaySong")
+            {
+                widthService.Reset();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,6 +56,11 @@ namespace HotkeyMusicPlayer
             }
 
             TogglePlayPause();
+
+            widthService = new WidthService(tblTitle, tblArtist, cdSong, cdSlider);
+            widthService.Reset();
+
+            viewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
 
         private IEnumerable<HotKeySource> GetHotKeySources()
@@ -97,6 +111,11 @@ namespace HotkeyMusicPlayer
         private void Next_Click(object sender, RoutedEventArgs e)
         {
             Next();
+        }
+
+        private void Media_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            viewModel.UpdateCurrentPlaySongPosition();
         }
 
         private void Media_MediaEnded(object sender, RoutedEventArgs e)
@@ -150,6 +169,11 @@ namespace HotkeyMusicPlayer
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F3) tbxSearch.Focus();
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            widthService?.Update();
         }
 
         private void ScollToCurrentShowSong()

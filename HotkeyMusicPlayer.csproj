@@ -64,6 +64,7 @@
     <Compile Include="PathToUriConverter.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="ViewModel.cs" />
+    <Compile Include="WidthService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

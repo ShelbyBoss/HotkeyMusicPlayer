@@ -108,8 +108,6 @@ namespace HotkeyMusicPlayer
                 currentSong = song;
                 OnNotifyPropertyChanged("CurrentShowSong");
                 OnNotifyPropertyChanged("CurrentPlaySong");
-
-                UpdateCurrentPlaySongPosition();
             }
         }
 
@@ -123,8 +121,6 @@ namespace HotkeyMusicPlayer
                 currentSong = value;
                 OnNotifyPropertyChanged("CurrentShowSong");
                 OnNotifyPropertyChanged("CurrentPlaySong");
-
-                UpdateCurrentPlaySongPosition();
             }
         }
 
