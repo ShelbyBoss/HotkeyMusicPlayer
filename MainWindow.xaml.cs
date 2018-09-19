@@ -25,7 +25,7 @@ namespace HotkeyMusicPlayer
         {
             InitializeComponent();
 
-            DataContext = viewModel = new ViewModel(media, App.StartupArgs);
+            DataContext = viewModel = new ViewModel(media);
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(20);
