@@ -44,7 +44,8 @@ namespace HotkeyMusicPlayer
         {
             try
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, hotKeyFileName);
+                string directory = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
+                string path = Path.Combine(directory, hotKeyFileName);
                 string[] hotKeyLines = File.ReadAllLines(path);
 
                 hotKeys = HotKey.GetRegisteredHotKeys(hotKeyLines, GetHotKeySources()).ToArray();

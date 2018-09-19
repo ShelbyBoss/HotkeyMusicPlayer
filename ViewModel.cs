@@ -177,10 +177,9 @@ namespace HotkeyMusicPlayer
             }
         }
 
-        public ViewModel(MediaElement player, string[] sources)
+        public ViewModel(MediaElement player)
         {
             this.player = player;
-            this.sources = sources;
 
             isAllSongsShuffle = true;
             lowerSearchKey = searchKey = string.Empty;
@@ -188,7 +187,7 @@ namespace HotkeyMusicPlayer
             allSongsShuffled = new Song[0];
             songs = new Song[0];
 
-            Refresh();
+            Sources = Environment.GetCommandLineArgs().Skip(1).ToArray();
         }
 
         public void Refresh()
