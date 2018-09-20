@@ -155,7 +155,7 @@ namespace HotkeyMusicPlayer
             get { return sources; }
             set
             {
-                if (value == sources || (value != null) && value.SequenceEqual(sources)) return;
+                if (value == sources) return;
 
                 sources = value;
                 OnNotifyPropertyChanged("Sources");
