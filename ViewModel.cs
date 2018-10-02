@@ -325,22 +325,22 @@ namespace HotkeyMusicPlayer
 
         public void SetNextSong()
         {
-            SetNextSong(Songs);
+            SetNextSong(PlayOnlySearchSongs ? Songs : allSongsShuffled);
         }
 
-        private void SetNextSong(IList<Song> songs)
+        private void SetNextSong(Song[] songs)
         {
-            int index = songs.IndexOf(currentSong);
+            int index = Array.IndexOf(songs, currentSong);
 
             if (index == -1 && !songs.Any()) return;
 
-            index = (index + 1) % songs.Count;
+            index = (index + 1) % songs.Length;
             CurrentPlaySong = songs.ElementAtOrDefault(index);
         }
 
         public void SetPreviousSong()
         {
-            SetPreviousSong(Songs);
+            SetPreviousSong(PlayOnlySearchSongs ? Songs : allSongsShuffled);
         }
 
         public void SetPreviousSong(IList<Song> songs)
