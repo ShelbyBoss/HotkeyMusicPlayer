@@ -353,7 +353,7 @@ namespace HotkeyMusicPlayer
                 index = 1;
             }
 
-            index = (index + songs.Count - 1) % songs.Length;
+            index = (index + songs.Length - 1) % songs.Length;
             CurrentPlaySong = songs.ElementAtOrDefault(index);
         }
 
