@@ -184,7 +184,7 @@ namespace HotkeyMusicPlayer
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            foreach (HotKey hotKey in hotKeys) hotKey?.Dispose();
+            foreach (HotKey hotKey in hotKeys ?? Enumerable.Empty<HotKey>()) hotKey?.Dispose();
         }
 
         private void StackPanel_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
