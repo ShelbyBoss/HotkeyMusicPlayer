@@ -343,9 +343,9 @@ namespace HotkeyMusicPlayer
             SetPreviousSong(PlayOnlySearchSongs ? Songs : allSongsShuffled);
         }
 
-        public void SetPreviousSong(IList<Song> songs)
+        public void SetPreviousSong(Song[] songs)
         {
-            int index = songs.IndexOf(currentSong);
+            int index = Array.IndexOf(songs, currentSong);
 
             if (index == -1)
             {
@@ -353,7 +353,7 @@ namespace HotkeyMusicPlayer
                 index = 1;
             }
 
-            index = (index + songs.Count - 1) % songs.Count;
+            index = (index + songs.Count - 1) % songs.Length;
             CurrentPlaySong = songs.ElementAtOrDefault(index);
         }
 
