@@ -95,20 +95,10 @@ namespace HotkeyMusicPlayer
             }
         }
 
-        public object CurrentShowSong
+        public Song? CurrentShowSong
         {
-            get { return Songs.Contains(currentSong) ? (object)currentSong : null; }
-            set
-            {
-                if (value == null) return;
-
-                Song song = (Song)value;
-                if (song == currentSong || !allSongsShuffled.Contains(song)) return;
-
-                currentSong = song;
-                OnNotifyPropertyChanged("CurrentShowSong");
-                OnNotifyPropertyChanged("CurrentPlaySong");
-            }
+            get { return Songs.Contains(currentSong) ? (Song?)currentSong : null; }
+            set { if (value.HasValue) CurrentPlaySong = value.Value; }
         }
 
         public Song CurrentPlaySong
