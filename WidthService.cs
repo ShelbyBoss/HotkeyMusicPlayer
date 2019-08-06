@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -54,8 +50,6 @@ namespace HotkeyMusicPlayer
 
             cdSong.Width = new GridLength(maxSongWidth);
             cdSlider.Width = new GridLength(1, GridUnitType.Star);
-
-            //System.Diagnostics.Debug.WriteLine(state + ": " + maxSongWidth);
         }
 
         public void Update()

@@ -109,9 +109,9 @@
     <Resource Include="7.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StdOttLib\StdOttWpfLib.csproj">
+    <ProjectReference Include="..\StdOttLib\StdOttFrameworkLib\StdOttFrameworkLib.csproj">
       <Project>{d1334524-78a5-4d16-93bf-27a57c6dbe56}</Project>
-      <Name>StdOttWpfLib</Name>
+      <Name>StdOttFrameworkLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
